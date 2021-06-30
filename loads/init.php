@@ -10,5 +10,5 @@ if (function_exists('bind_textdomain_codeset'))
 }
 
 
-$MyMetatag->setJs("/public/js/galeria.js");
+$MyMetatag->setJs("/modulos/gakeria/web/js/galeria.js");
 ?>
