@@ -2,7 +2,7 @@
 use Galeria\model\fotos;
 use Galeria\model\albumes;
 
-$album	= $MyRequest->getRequest('album');
+$album	= $MyRequest->getUrlParam('album');
 $MyAlbum = new albumes();
 
 
