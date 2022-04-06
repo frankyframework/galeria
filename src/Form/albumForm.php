@@ -18,7 +18,7 @@ class albumForm extends \Franky\Form\Form
        
         $this->add(array(
                 'name' => 'nombre_album',
-                'label' => 'Nombre Album:',
+                'label' => _galeria('Nombre Album'),
                 'type'  => 'text',
                 'required'  => true,
                 'atributos' => array(
@@ -39,7 +39,7 @@ class albumForm extends \Franky\Form\Form
                 'type'  => 'button',
                 'atributos' => array(
                     'class'       => 'btn btn-primary btn-big float_right ',
-                    'value' => "Guardar"
+                    'value' => _galeria("Guardar")
                  )
                 
             )

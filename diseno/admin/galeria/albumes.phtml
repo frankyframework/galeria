@@ -1,8 +1,8 @@
 <div class="content">
      <div class="w-xxxx-12"><?php echo breadcrumbs(); ?></div>
-    <h1 class="titulo_seccion_admin">Albumes</h1>
+    <h1 class="titulo_seccion_admin"><?=_galeria('Albumes')?></h1>
     <div class="content">
-        <div><a href="javascript:void(0);" class='add_album'>Agregar album</a></div>
+        <div><a href="javascript:void(0);" class='add_album'><?=_galeria('Agregar album')?></a></div>
         <div class='contenedor_form_album' style='display:none;'>
         <?php echo $albumForm->openTag(); ?>
         <?php echo $albumForm->getRow('nombre_album'); ?>
@@ -20,7 +20,7 @@
         
         <?php else: ?>
    </div>
-        <div class='no_hay_datos'>No hay albumes registrados</div>
+        <div class='no_hay_datos'><?=_galeria('No hay albumes registrados')?></div>
         <?php endif; ?>
         
     </div>
