@@ -6,7 +6,7 @@ function eliminarAlbumGaleria($id,$status=0)
         global $MyAccessList;
         global $MyMessageAlert;
         $respuesta =null;
-        if($MyAccessList->MeDasChancePasar(ADMINISTRAR_GALERIA))
+        if($MyAccessList->MeDasChancePasar("administrar_galeria"))
         {
             if($MyAlbum->delete(addslashes($id),addslashes($status)) == REGISTRO_SUCCESS)
             {
@@ -32,7 +32,7 @@ function eliminarFotoGaleria($id,$status=0)
         global $MyAccessList;
         global $MyMessageAlert;
         $respuesta =null;
-        if($MyAccessList->MeDasChancePasar(ADMINISTRAR_GALERIA))
+        if($MyAccessList->MeDasChancePasar("administrar_galeria"))
         {
             if($MyFoto->delete(addslashes($id),addslashes($status)) == REGISTRO_SUCCESS)
             {
@@ -60,7 +60,7 @@ function editarFotoGaleria($id,$descripcion)
         global $MyAccessList;
         global $MyMessageAlert;
         $respuesta =null;
-        if($MyAccessList->MeDasChancePasar(ADMINISTRAR_GALERIA))
+        if($MyAccessList->MeDasChancePasar("administrar_galeria"))
         {
             if($MyFoto->editCampo(addslashes($id),"descripcion",addslashes($descripcion)) == REGISTRO_SUCCESS)
             {
@@ -95,7 +95,7 @@ function editarAlbumGaleria($id,$nombre)
         }
         if(!$error)
         {
-            if($MyAccessList->MeDasChancePasar(ADMINISTRAR_GALERIA))
+            if($MyAccessList->MeDasChancePasar("administrar_galeria"))
             {
                 if($MyAlbum->edit(addslashes($id),addslashes($nombre),  getFriendly($nombre)) == REGISTRO_SUCCESS)
                 {
@@ -122,7 +122,7 @@ function ShowFotosGaleria($album)
 	$MyFoto = new Galeria\model\fotos();
         global $MyAccessList;
         $respuesta =null;
-        if($MyAccessList->MeDasChancePasar(ADMINISTRAR_GALERIA))
+        if($MyAccessList->MeDasChancePasar("administrar_galeria"))
         {
             
             $MyFoto->setOrdensql("orden ASC");
@@ -176,7 +176,7 @@ function guardarAlbumGaleria($nombre)
             $error = true;
         }
         
-        if($MyAccessList->MeDasChancePasar(ADMINISTRAR_GALERIA) && !$error)
+        if($MyAccessList->MeDasChancePasar("administrar_galeria") && !$error)
         {
             if($MyAlbum->save(addslashes($nombre),  getFriendly($nombre)) == REGISTRO_SUCCESS)
             {
@@ -209,7 +209,7 @@ function setOrdenFotoGaleria($album, $orden)
         global $MyAccessList;
         global $MyMessageAlert;
         $respuesta =null;
-        if($MyAccessList->MeDasChancePasar(ADMINISTRAR_GALERIA))
+        if($MyAccessList->MeDasChancePasar("administrar_galeria"))
         {
            
         
@@ -245,7 +245,7 @@ function setOrdenAlbumGaleria($orden)
         global $MyAccessList;
         global $MyMessageAlert;
         $respuesta =null;
-        if($MyAccessList->MeDasChancePasar(ADMINISTRAR_GALERIA))
+        if($MyAccessList->MeDasChancePasar("administrar_galeria"))
         {
             $orden = explode(",",str_replace("album_","",$orden));
 

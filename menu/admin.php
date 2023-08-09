@@ -5,7 +5,7 @@ return array(
    
 
             array(
-             "permiso" =>   ADMINISTRAR_GALERIA,
+             "permiso" =>   "administrar_galeria",
              "url" => $MyRequest->url(ANMIN_ALBUM_GALERIA),
              "etiqueta" => "Galerias"
             )
