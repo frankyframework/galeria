@@ -10,6 +10,12 @@
                 "auto_increment":1
             },
             {
+                "name":"id_user",
+                "type":"int",
+                "length":11,
+                "null":0
+            },
+            {
                 "name":"nombre",
                 "type":"varchar",
                 "length":255,

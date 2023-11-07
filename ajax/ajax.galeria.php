@@ -25,6 +25,34 @@ function eliminarAlbumGaleria($id,$status=0)
 	
 	return $respuesta;
 }
+
+function eliminarMiAlbumGaleria($id,$status=0)
+{
+	
+	$MyAlbum = new Galeria\model\albumes();
+        global $MyAccessList;
+        global $MyMessageAlert;
+        global $MySession;
+        $respuesta =null;
+        if($MyAccessList->MeDasChancePasar("administrar_mi_galeria"))
+        {
+            if($MyAlbum->delete(addslashes($id),addslashes($status), $MySession->GetVar('id')) == REGISTRO_SUCCESS)
+            {
+               $respuesta[] = array("message" => "success");
+            }
+            else
+            {
+		        $respuesta[] = array("message" => $MyMessageAlert->Message("eliminar_generico_error"));
+            }
+        }
+        else
+        {
+             $respuesta[] = array("message" => $MyMessageAlert->Message("sin_privilegios"));
+        }
+	
+	return $respuesta;
+}
+
 function eliminarFotoGaleria($id,$status=0)
 {
 	
@@ -52,6 +80,46 @@ function eliminarFotoGaleria($id,$status=0)
 	return $respuesta;
 }
 
+function eliminarMiFotoGaleria($id,$status=0)
+{
+	
+	$MyFoto = new Galeria\model\fotos();
+    $MyAlbum = new Galeria\model\albumes();
+        global $MyAccessList;
+        global $MyMessageAlert;
+        global $MySession;
+        $respuesta =null;
+
+        if($MyAccessList->MeDasChancePasar("administrar_mi_galeria"))
+        {
+            $MyFoto->get("", "",addslashes($id));
+            $foto = $MyFoto->getRows();
+            $album = $foto["id_album"];
+            if($MyAlbum->get($album,"",$MySession->GetVar('id')))
+            {  
+
+                if($MyFoto->delete(addslashes($id),addslashes($status)) == REGISTRO_SUCCESS) 
+                {
+                    $respuesta[] = array("message" => "success");
+                }
+                else
+                {
+                    $respuesta[] = array("message" => $MyMessageAlert->Message("eliminar_generico_error"));
+                }
+            } else
+            {
+                $respuesta[] = array("message" => $MyMessageAlert->Message("eliminar_generico_error"));
+            }
+        
+        }
+        else
+        {
+             $respuesta[] = array("message" => $MyMessageAlert->Message("sin_privilegios"));
+        }
+	
+	return $respuesta;
+}
+
 
 function editarFotoGaleria($id,$descripcion)
 {
@@ -62,6 +130,7 @@ function editarFotoGaleria($id,$descripcion)
         $respuesta =null;
         if($MyAccessList->MeDasChancePasar("administrar_galeria"))
         {
+            
             if($MyFoto->editCampo(addslashes($id),"descripcion",addslashes($descripcion)) == REGISTRO_SUCCESS)
             {
 		
@@ -69,7 +138,7 @@ function editarFotoGaleria($id,$descripcion)
             }
             else
             {
-		$respuesta[] = array("message" => $MyMessageAlert->Message("editar_generico_error"));
+		        $respuesta[] = array("message" => $MyMessageAlert->Message("editar_generico_error"));
             }
         }
         else
@@ -77,6 +146,47 @@ function editarFotoGaleria($id,$descripcion)
              $respuesta[] = array("message" => $MyMessageAlert->Message("sin_privilegios"));
         }
 	
+	return $respuesta;
+}
+
+function editarMiFotoGaleria($id,$descripcion)
+{
+	
+	$MyFoto = new Galeria\model\fotos();
+
+    $MyAlbum = new Galeria\model\albumes();
+    global $MyAccessList;
+    global $MyMessageAlert;
+    global $MySession;
+    $respuesta =null;
+    if($MyAccessList->MeDasChancePasar("administrar_mi_galeria"))
+    {
+
+        $MyFoto->get("", "",addslashes($id));
+        $foto = $MyFoto->getRows();
+        $album = $foto["id_album"];
+        if($MyAlbum->get($album,"",$MySession->GetVar('id')))
+        {
+            if($MyFoto->editCampo(addslashes($id),"descripcion",addslashes($descripcion)) == REGISTRO_SUCCESS)
+            {
+        
+            $respuesta[] = array("message" => "success", "descripcion" => ($descripcion));
+            }
+            else
+            {
+                $respuesta[] = array("message" => $MyMessageAlert->Message("editar_generico_error"));
+            }
+        }
+        else
+        {
+            $respuesta[] = array("message" => $MyMessageAlert->Message("editar_generico_error"));
+        }
+    }
+    else
+    {
+            $respuesta[] = array("message" => $MyMessageAlert->Message("sin_privilegios"));
+    }
+
 	return $respuesta;
 }
 
@@ -115,7 +225,41 @@ function editarAlbumGaleria($id,$nombre)
 	return $respuesta;
 }
 
+function editarMiAlbumGaleria($id,$nombre)
+{
+	
+	$MyAlbum = new Galeria\model\albumes();
+        global $MyAccessList;
+        global $MyMessageAlert;
+        global $MySession;
+        $respuesta =null;
+        $error = false;
+        if($MyAlbum->existeAlbum($nombre,$id,$MySession->GetVar('id')) == REGISTRO_SUCCESS)
+        {
+            $respuesta = array("message" => $MyMessageAlert->Message("galeria_album_duplicado"));
+            $error = true;
+        }
+        if(!$error)
+        {
+            if($MyAccessList->MeDasChancePasar("administrar_mi_galeria"))
+            {
+                if($MyAlbum->edit(addslashes($id),addslashes($nombre),  getFriendly($nombre),$MySession->GetVar('id')) == REGISTRO_SUCCESS)
+                {
 
+                   $respuesta = array("message" => "success","nombre" => ($nombre));
+                }
+                else
+                {
+                    $respuesta = array("message" => $MyMessageAlert->Message("editar_generico_error"));
+                }
+            }
+            else
+            {
+                 $respuesta = array("message" => $MyMessageAlert->Message("sin_privilegios"));
+            }
+        }
+	return $respuesta;
+}
 function ShowFotosGaleria($album)
 {
         
@@ -186,6 +330,60 @@ function guardarAlbumGaleria($nombre)
                 $registro = $MyAlbum->getRows();
                 
                 $html = getAlbumGaleria($registro["id"],$registro["nombre"],$registro["fecha"],1);
+                
+                $respuesta = array("message" => "success","html" => $html);
+            }
+            else
+            {
+		$respuesta = array("message" => $MyMessageAlert->Message("editar_generico_error"));
+            }
+           
+        }
+       
+	
+	return $respuesta;
+}
+
+function guardarMiAlbumGaleria($nombre)
+{
+        
+	$MyAlbum = new Galeria\model\albumes();
+        global $MyAccessList;
+        global $MyMessageAlert;
+        global $MySession;
+        $respuesta =null;
+        
+        $error = false;
+        $rules = array(
+                    "Nombre del album" => array("valor" => $nombre,"required","length" => array("max" => "200"))
+                    );
+
+
+        $validaciones =  new Franky\Core\validaciones();
+        $valid = $validaciones->validRules($rules);
+        if(!$valid)
+        {
+            
+            $respuesta = array("message" => $validaciones->getMsg());
+            $error = true;
+        }
+        
+        if($MyAlbum->existeAlbum($nombre, "", $MySession->GetVar('id')) == REGISTRO_SUCCESS)
+        {
+            $respuesta = array("message" => $MyMessageAlert->Message("galeria_album_duplicado"));
+            $error = true;
+        }
+        
+        if($MyAccessList->MeDasChancePasar("administrar_mi_galeria") && !$error)
+        {
+            if($MyAlbum->save(addslashes($nombre),  getFriendly($nombre), $MySession->GetVar('id')) == REGISTRO_SUCCESS)
+            {
+                $MyAlbum->get($MyAlbum->getUltimoID(),1);
+            
+		
+                $registro = $MyAlbum->getRows();
+                
+                $html = getMiAlbumGaleria($registro["id"],$registro["nombre"],$registro["fecha"],1);
                 
                 $respuesta = array("message" => "success","html" => $html);
             }
@@ -276,4 +474,10 @@ $MyAjax->register("ShowFotosGaleria");
 $MyAjax->register("guardarAlbumGaleria");
 $MyAjax->register("setOrdenFotoGaleria");
 $MyAjax->register("setOrdenAlbumGaleria");
+
+$MyAjax->register("eliminarMiAlbumGaleria");
+$MyAjax->register("eliminarMiFotoGaleria");
+$MyAjax->register("editarMiFotoGaleria");
+$MyAjax->register("editarMiAlbumGaleria");
+$MyAjax->register("guardarMiAlbumGaleria");
 ?>

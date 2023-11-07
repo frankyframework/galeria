@@ -29,6 +29,37 @@ promptEditarAlbum = function(msg,title,id)
     });
 }
 
+promptEditarMiAlbum = function(msg,title,id)
+{
+    var now = $.now();
+   
+    var prompt = $('<div id="dialog-confirm'+now+'" title="'+title+'">\
+    <p>'+msg+'</p>\
+    <div><textarea name="input_nombre_album" rows="2" cols="15">'+$(".label_nombre_album_"+id).text()+'</textarea></div>\
+    </div>');
+
+    $(function() {
+        $( prompt ).dialog({
+            resizable: false,
+            height:140,
+            modal: true,
+            buttons: {
+                Guardar: function() {
+                    
+                    var txt = prompt.children("div").children("textarea").val();
+                    editarMiAlbumGaleria(id,txt);
+                    $(".label_nombre_album_"+id).html(txt)
+                     $( this ).dialog( "close" );
+                },
+                Cancelar: function() {
+                   
+                     $( this ).dialog( "close" );
+                } 
+            }
+        });
+    });
+}
+
 promptEditarFoto = function(msg,title,id)
 {
     var now = $.now();
@@ -48,6 +79,37 @@ promptEditarFoto = function(msg,title,id)
                     
                     var txt = prompt.children("div").children("textarea").val();
                     editarFotoGaleria(id,txt);
+                    $(".label_descripcion_foto_"+id).html(txt)
+                     $( this ).dialog( "close" );
+                },
+                Cancelar: function() {
+                   
+                     $( this ).dialog( "close" );
+                } 
+            }
+        });
+    });
+}
+
+promptEditarMiFoto = function(msg,title,id)
+{
+    var now = $.now();
+   
+    var prompt = $('<div id="dialog-confirm'+now+'" title="'+title+'">\
+    <p>'+msg+'</p>\
+    <div><textarea name="input_descripcion_foto" rows="2" cols="15">'+$(".label_descripcion_foto_"+id).text()+'</textarea></div>\
+    </div>');
+
+    $(function() {
+        $( prompt ).dialog({
+            resizable: false,
+            height:140,
+            modal: true,
+            buttons: {
+                Guardar: function() {
+                    
+                    var txt = prompt.children("div").children("textarea").val();
+                    editarMiFotoGaleria(id,txt);
                     $(".label_descripcion_foto_"+id).html(txt)
                      $( this ).dialog( "close" );
                 },
@@ -132,6 +194,16 @@ function guardarAlbumGaleria()
     
 }
 
+function guardarMiAlbumGaleria()
+{
+     var var_query = {
+          function: "guardarMiAlbumGaleria",vars_ajax: [$("input[name=nombre_album]").val()]
+        };
+    
+    pasarelaAjax('GET', var_query, "guardarAlbumGaleriaHTML", '');
+    
+}
+
 function guardarAlbumGaleriaHTML(response)
 {
     var respuesta = null;
@@ -160,6 +232,20 @@ function editarFotoGaleria(id,txt)
 {
     var var_query = {
           "function": "editarFotoGaleria",
+          "vars_ajax":[id,txt]
+        };
+    var var_function = [id];
+    
+    pasarelaAjax('POST', var_query, "editarFotoGaleriaHTML",var_function);
+    
+    
+}
+
+
+function editarMiFotoGaleria(id,txt)
+{
+    var var_query = {
+          "function": "editarMiFotoGaleria",
           "vars_ajax":[id,txt]
         };
     var var_function = [id];
@@ -203,6 +289,18 @@ function editarAlbumGaleria(id,txt)
     
     
 }
+function editarMiAlbumGaleria(id,txt)
+{
+    var var_query = {
+          "function": "editarMiAlbumGaleria",
+          "vars_ajax":[id,txt]
+        };
+    var var_function = [id];
+    
+    pasarelaAjax('POST', var_query, "editarAlbumGaleriaHTML",var_function);
+    
+    
+}
 
 function editarAlbumGaleriaHTML(response,id)
 {
@@ -214,7 +312,7 @@ function editarAlbumGaleriaHTML(response,id)
         
         if(respuesta["message"] == "success")
         {
-            
+            $("[data-name='"+id+"']").text(respuesta["nombre"])
         }
         else
         {
@@ -228,6 +326,13 @@ function editarAlbumGaleriaHTML(response,id)
 function eliminarFotoGaleria(id)
 {
     EliminarRegistro("eliminarFotoGaleria",id,0,'¿Realmente quiere eliminar esta foto?',"eliminarFotoGaleriaHTML"); 
+
+    
+}
+
+function eliminarMiFotoGaleria(id)
+{
+    EliminarRegistro("eliminarMiFotoGaleria",id,0,'¿Realmente quiere eliminar esta foto?',"eliminarFotoGaleriaHTML"); 
 
     
 }
@@ -259,6 +364,11 @@ function eliminarFotoGaleriaHTML(response,id)
 function eliminarAlbumGaleria(id)
 {
     EliminarRegistro("eliminarAlbumGaleria",id,0,'¿Realmente quiere eliminar este album?',"eliminarAlbumGaleriaHTML"); 
+}
+
+function eliminarMiAlbumGaleria(id)
+{
+    EliminarRegistro("eliminarMiAlbumGaleria",id,0,'¿Realmente quiere eliminar este album?',"eliminarAlbumGaleriaHTML"); 
 }
 
 function eliminarAlbumGaleriaHTML(response,id)

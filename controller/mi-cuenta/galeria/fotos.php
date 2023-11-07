@@ -2,38 +2,39 @@
 use Galeria\model\fotos;
 use Galeria\model\albumes;
 
-$album	= $MyRequest->getUrlParam('album');
+$album	= $MyRequest->getRequest('album');
 $MyAlbum = new albumes();
-
-
-if($MyAlbum->get($album,1) == REGISTRO_SUCCESS)
+$lista_admin_data = array();
+if($MyAlbum->get($album,1,$MySession->GetVar('id')) == REGISTRO_SUCCESS)
 {
 
-    $_registro = $MyAlbum->getRows();
+    $registro = $MyAlbum->getRows();
+    
+    $album_nombre = $registro["nombre"];
+    
     $MyFoto = new fotos();
 
     $MyFoto->setPage(1);
     $MyFoto->setTampag(2000);
     $MyFoto->setOrdensql("orden ASC");
 
-    $result   = $MyFoto->get($_registro['id'],1);
+    $result   = $MyFoto->get($album,1);
+   
+
 
     if($MyFoto->getTotal() > 0)
     {
         while($registro = $MyFoto->getRows())
         {
             $iRow = 0;	
-            $p = explode(" ", $registro["fecha"]);
+             $p = explode(" ", $registro["fecha"]);
             $f = explode("-", $p[0]);
             $registro["fecha"] = $f[2] . " " . $_Months[$f[1]] . " " . $f[0] . " " . substr($p[1], 0, -3) . " Hrs.";
-            
+     
             $lista_admin_data[] = $registro;
 
         }
     }
-    
-    
-
 }
 else
 {

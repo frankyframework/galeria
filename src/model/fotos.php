@@ -7,7 +7,7 @@ class fotos  extends \Franky\Database\Mysql\objectOperations
     parent::__construct();
     $this->from()->addTable('fotos_galeria');
   }
-        function get($album = "",$status="")
+        function get($album = "",$status="", $foto="")
         {
             $campos = array("id","foto","id_album","status","fecha","descripcion","orden");
 
@@ -19,6 +19,11 @@ class fotos  extends \Franky\Database\Mysql\objectOperations
             if($album != "")
             {
               $this->where()->addAnd('id_album',$album,'=');
+            }
+
+            if($foto != "")
+            {
+              $this->where()->addAnd('id',$album,'=');
             }
 
             return $this->getColeccion($campos);

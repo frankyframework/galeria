@@ -29,6 +29,34 @@
             "modulo":"galeria"
         },
         {
+            "php":"mi-cuenta/galeria/albumes.php",
+            "css":[],
+            "js":["galeria.js"],
+            "jquery":["jquery-validate"],
+            "resource":"administrar_mi_galeria",
+            "constante":"MICUENTA_ALBUM_GALERIA",
+            "url":"mi-cuenta/galeria/albumes/",
+            "nombre":"Albumes",
+            "ajax":["base/ajax.admin.js","galeria/ajax.admin.js"],
+            "status":1,
+            "editable":1,
+            "modulo":"galeria"
+        },
+        {
+            "php":"mi-cuenta/galeria/fotos.php",
+            "css":["galeria.css"],
+            "js":["galeria.js"],
+            "jquery":["photoswipe","ajaxform"],
+            "resource":"administrar_mi_galeria",
+            "constante":"MICUENTA_FOTOS_GALERIA",
+            "url":"mi-cuenta/galeria/albumes/fotos/",
+            "nombre":"Fotos",
+            "ajax":["base/ajax.admin.js","galeria/ajax.admin.js"],
+            "status":1,
+            "editable":1,
+            "modulo":"galeria"
+        },
+        {
             "php":"galeria/albumes.php",
             "css":[],
             "js":[],
