@@ -291,6 +291,37 @@ function ShowFotosGaleria($album)
 	return $respuesta;
 }
 
+function ShowMiFotosGaleria($album)
+{
+        
+	$MyFoto = new Galeria\model\fotos();
+        global $MyAccessList;
+        $respuesta =null;
+        if( $MyAccessList->MeDasChancePasar("administrar_mi_galeria"))
+        {
+            
+            $MyFoto->setOrdensql("orden ASC");
+            $MyFoto->setTampag(2000);
+            if($MyFoto->get($album,1) == REGISTRO_SUCCESS)
+            {
+                $i = 0;
+                $html = "";
+                while($registro = $MyFoto->getRows())
+                {
+                    
+                    $html .= getMiFotoGaleria($registro["id"],$album,$registro["foto"],$registro["descripcion"],$registro["fecha"],1,$i);
+                    $i++;
+                }
+                $respuesta["html"] =  $html;
+                
+               
+            }
+        }
+       
+	
+	return $respuesta;
+}
+
 function guardarAlbumGaleria($nombre)
 {
         
@@ -474,7 +505,7 @@ $MyAjax->register("ShowFotosGaleria");
 $MyAjax->register("guardarAlbumGaleria");
 $MyAjax->register("setOrdenFotoGaleria");
 $MyAjax->register("setOrdenAlbumGaleria");
-
+$MyAjax->register("ShowMiFotosGaleria");
 $MyAjax->register("eliminarMiAlbumGaleria");
 $MyAjax->register("eliminarMiFotoGaleria");
 $MyAjax->register("editarMiFotoGaleria");

@@ -155,7 +155,15 @@ function setOrdenGaleriaHTML(response)
     return true;
 }
 
-
+function ShowMiFotosGaleria(album)
+{
+     var var_query = {
+          function: "ShowMiFotosGaleria",vars_ajax:[album]
+        };
+    
+    pasarelaAjax('GET', var_query, "ShowFotosGaleriaHTML", '');
+    
+}
 
 
 
