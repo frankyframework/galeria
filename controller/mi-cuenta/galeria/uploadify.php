@@ -11,7 +11,7 @@ if($MyAlbum->get($album,1,$MySession->GetVar('id')) != REGISTRO_SUCCESS)
 {
     $respuesta = array("error" => true,"msg" => $MyMessageAlert->Message("sin_privilegios"));  
 }
-if(!$MyAccessList->MeDasChancePasar("administrar_galeria"))
+if(!$MyAccessList->MeDasChancePasar("administrar_mi_galeria"))
 {
 
     $respuesta = array("error" => true,"msg" => $MyMessageAlert->Message("sin_privilegios"));  
