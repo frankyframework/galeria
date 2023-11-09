@@ -2,7 +2,7 @@
      <div class="w-xxxx-12"><?php echo breadcrumbs(); ?></div>
         <h1 class="titulo_seccion_admin"><?php echo $album_nombre; ?></h1>
     
-        <form name="imageform" id="imageform" method="post" enctype="multipart/form-data" action='/admin/galeria/uploadify.php' style="clear:both">
+        <form name="imageform" id="imageform" method="post" enctype="multipart/form-data" action='/mi-cuenta/galeria/uploadify.php' style="clear:both">
         <input type="hidden" name="album" value="<?php echo $album; ?>" />
         <div id='imageloadstatus' class="w-xxxx-12">
             <div id="progressbar" style="display:none;"><div class="progress-label"><?=_galeria('Loading')?>...</div></div>
@@ -58,7 +58,7 @@
         }
 
         var fd = new FormData(); 
-        fd.append('album', <?php echo $album; ?>);
+        fd.append('album', $('[name=album]').val());
 
         for (var i = 0; i < files.length; i++) { // Loop all files
                 fd.append('photos[]', files[i]); // Create an append() method, one for each file dropped
@@ -93,7 +93,7 @@
 
                     $("#imageloadbutton").show();
 
-                    ShowFotosGaleria(<?php echo $album; ?>);
+                    ShowFotosGaleria( $('[name=album]').val());
                     $("#photoimg").val('');
 
                     $(function() {    
@@ -101,7 +101,7 @@
                         connectWith: ".fondo_galeria",
                         update: function(event, ui){
                             var newOrder = $(this).sortable('toArray').toString();
-                            setOrdenFotoGaleria(<?php echo $album; ?>,newOrder);  
+                            setOrdenFotoGaleria( $('[name=album]').val(),newOrder);  
                         }  ,
                         placeholder: 'ui-state-default'
                     });
@@ -146,7 +146,7 @@
           connectWith: ".fondo_galeria",
           update: function(event, ui){
               var newOrder = $(this).sortable('toArray').toString();
-              setOrdenFotoGaleria(<?php echo $album; ?>,newOrder);  
+              setOrdenFotoGaleria( $('[name=album]').val(),newOrder);  
           }  ,
           placeholder: 'ui-state-default'
       });
