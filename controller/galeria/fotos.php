@@ -14,7 +14,7 @@ if($MyAlbum->get($album,1) == REGISTRO_SUCCESS)
 
     $MyFoto->setPage(1);
     $MyFoto->setTampag(2000);
-    $MyFoto->setOrdensql("orden ASC");
+    $MyFoto->setOrdensql("fotos_galeria.orden ASC");
 
     $result   = $MyFoto->get($_registro['id'],1);
 

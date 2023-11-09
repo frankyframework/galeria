@@ -9,11 +9,12 @@ class fotos  extends \Franky\Database\Mysql\objectOperations
   }
         function get($album = "",$status="", $foto="")
         {
-            $campos = array("id","foto","id_album","status","fecha","descripcion","orden");
+            $campos = array("fotos_galeria.id","foto","id_album","fotos_galeria.status","fotos_galeria.fecha",
+            "fotos_galeria.descripcion","fotos_galeria.orden", "users.usuario");
 
             if($status != "")
             {
-                  $this->where()->addAnd('status',$status,'=');
+                  $this->where()->addAnd('fotos_galeria.status',$status,'=');
             }
 
             if($album != "")
@@ -23,8 +24,11 @@ class fotos  extends \Franky\Database\Mysql\objectOperations
 
             if($foto != "")
             {
-              $this->where()->addAnd('id',$album,'=');
+              $this->where()->addAnd('fotos_galeria.id',$album,'=');
             }
+
+            $this->from()->addInner('albumes_galeria','albumes_galeria.id','fotos_galeria.id_album');
+            $this->from()->addLeft('users','albumes_galeria.id_user','users.id');
 
             return $this->getColeccion($campos);
 
