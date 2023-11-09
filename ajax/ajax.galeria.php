@@ -266,7 +266,7 @@ function ShowFotosGaleria($album)
 	$MyFoto = new Galeria\model\fotos();
         global $MyAccessList;
         $respuesta =null;
-        if($MyAccessList->MeDasChancePasar("administrar_galeria"))
+        if($MyAccessList->MeDasChancePasar("administrar_galeria") || $MyAccessList->MeDasChancePasar("administrar_mi_galeria"))
         {
             
             $MyFoto->setOrdensql("orden ASC");
