@@ -1,6 +1,6 @@
 <?php
 return array(
-     array('title'=> "Widgets",
+     array('title'=> "Galeria",
             'children' =>  array(
    
 
