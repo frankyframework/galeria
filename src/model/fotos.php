@@ -10,7 +10,7 @@ class fotos  extends \Franky\Database\Mysql\objectOperations
         function get($album = "",$status="", $foto="")
         {
             $campos = array("fotos_galeria.id","foto","id_album","fotos_galeria.status","fotos_galeria.fecha",
-            "fotos_galeria.descripcion","fotos_galeria.orden", "users.usuario");
+            "fotos_galeria.descripcion","fotos_galeria.orden", "users.nombre as usuario");
 
             if($status != "")
             {
