@@ -9,7 +9,9 @@ class albumes  extends \Franky\Database\Mysql\objectOperations
     }
     function get($id= "",$status="", $id_user="")
     {
-        $campos = array("id","nombre","friendly","status","fecha","orden", "id_user");
+        $campos = array("albumes_galeria,id","albumes_galeria.nombre","albumes_galeria.friendly",
+        "albumes_galeria.status","albumes_galeria.fecha","orden", "albumes_galeria.id_user",
+        "users.nombre as nombre_usuario");
 
 
         if($status != "")
@@ -32,6 +34,7 @@ class albumes  extends \Franky\Database\Mysql\objectOperations
                 $this->where()->addAnd('friendly',$id,'=');
             }
         }
+        $this->from()->addLeft('users','albumes_galeria.id_user','users.id');
 
         return $this->getColeccion($campos);
 

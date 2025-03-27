@@ -29,7 +29,7 @@ function getAlbumGaleria($id,$nombre,$fecha,$admin=0)
     global $MyConfigure;
     global $MyRequest;
     $html = "";
-    $html .= "<div class='w-xxxx-2 w-xxx-3 w-xx-4 w-x-6 align_center img_foto_clientes album_$id' id='album_$id'>"
+    $html .= "<div class='w-xxxx-2 w-xxx-3 w-xx-4 w-x-6 align_center img_foto_clientes album_galeria_content album_$id' id='album_$id'>"
             .($MyAccessList->MeDasChancePasar("administrar_galeria") && $admin == 1 ? "<div><a href=\"javascript:void(0);\" onclick=\"eliminarAlbumGaleria('$id')\"><i class='icon icon-r-eliminar'></i></a></div>" : "")
             .($MyAccessList->MeDasChancePasar("administrar_galeria") && $admin == 1 ? "<div><a href=\"javascript:void(0);\" onclick=\"promptEditarAlbum('Nombre del album:','Editar album',$id )\"><i class='icon icon-editar'></i></a></div>": "")
             . "<div><h3><a href=\"".($admin == 1 ? $MyRequest->link(ADMIN_FOTOS_GALERIA."?album=".$id) : $MyRequest->url(GALERIA_DETALLE,array("album" => $id)))."\"  title=\"$nombre\" data-name=\"$id\">$nombre</a></h3></div>"
@@ -60,7 +60,7 @@ function getMiAlbumGaleria($id,$nombre,$fecha,$admin=0)
     global $MyConfigure;
     global $MyRequest;
     $html = "";
-    $html .= "<div class='w-xxxx-2 w-xxx-3 w-xx-4 w-x-6 align_center img_foto_clientes album_$id' id='album_$id'>"
+    $html .= "<div class='w-xxxx-2 w-xxx-3 w-xx-4 w-x-6 align_center img_foto_clientes album_galeria_content album_$id' id='album_$id'>"
             .($MyAccessList->MeDasChancePasar("administrar_mi_galeria") && $admin == 1 ? "<div><a href=\"javascript:void(0);\" onclick=\"eliminarMiAlbumGaleria('$id')\"><i class='icon icon-r-eliminar'></i></a></div>" : "")
             .($MyAccessList->MeDasChancePasar("administrar_mi_galeria") && $admin == 1 ? "<div><a href=\"javascript:void(0);\" onclick=\"promptEditarMiAlbum('Nombre del album:','Editar album',$id )\"><i class='icon icon-editar'></i></a></div>": "")
             . "<div><h3><a href=\"".($admin == 1 ? $MyRequest->link(MICUENTA_FOTOS_GALERIA."?album=".$id) : $MyRequest->url(GALERIA_DETALLE,array("album" => $id)))."\"  title=\"$nombre\" data-name=\"$id\">$nombre</a></h3></div>"
