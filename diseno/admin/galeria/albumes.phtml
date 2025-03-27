@@ -15,7 +15,7 @@
         <?php if(!empty($lista_admin_data)): ?>
         
             <?php foreach($lista_admin_data as $album): ?>
-                <?php echo getAlbumGaleria($album["id"],$album["nombre"],$album["fecha"],1); ?>
+                <?php echo getAlbumGaleria($album["id"],$album["nombre"],$album["nombre_usuario"],$album["fecha"],1); ?>
             <?php endforeach; ?>
         
         <?php else: ?>
