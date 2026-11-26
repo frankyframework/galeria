@@ -9,5 +9,5 @@ if (function_exists('bind_textdomain_codeset'))
 }
 
 
-$MyMetatag->setJs("/modulos/galeria/web/js/galeria.js");
+$MyMetatag->setJs("/static/".getCoreConfig('base/debug/cacheversion')."/galeria/web/js/galeria.js");
 ?>

@@ -88,26 +88,10 @@
                     $("#imageloadbutton").hide();
                 },
                 success:function(){
-
-                   
-
                     $("#imageloadbutton").show();
 
                     ShowFotosGaleria(<?php echo $album; ?>);
                     $("#photoimg").val('');
-
-                    $(function() {    
-                    $( "#cont_fotos" ).sortable({
-                        connectWith: ".fondo_galeria",
-                        update: function(event, ui){
-                            var newOrder = $(this).sortable('toArray').toString();
-                            setOrdenFotoGaleria(<?php echo $album; ?>,newOrder);  
-                        }  ,
-                        placeholder: 'ui-state-default'
-                    });
-                    $( "#cont_fotos" ).disableSelection();
-                    });
-
                 },
                 error:function(){
                     
@@ -138,20 +122,27 @@
             uploadMultiGaleria(e);
             
         });
-         
+        sortGaleriaFotos();
     });
 
-    $(function() {    
-      $( "#cont_fotos" ).sortable({
-          connectWith: ".fondo_galeria",
-          update: function(event, ui){
-              var newOrder = $(this).sortable('toArray').toString();
-              setOrdenFotoGaleria(<?php echo $album; ?>,newOrder);  
-          }  ,
-          placeholder: 'ui-state-default'
-      });
-      $( "#cont_fotos" ).disableSelection();
-    });
+    function sortGaleriaFotos() {
+        var gallery = $("#cont_fotos");
+        if(!gallery.length) return;
+        if(gallery.hasClass('ui-sortable')) {
+            gallery.sortable('refresh');
+        } else {
+            gallery.sortable({
+                items: '> .foto_galeria_content',
+                connectWith: ".fondo_galeria",
+                update: function(){
+                    var newOrder = $(this).sortable('toArray').toString();
+                    setOrdenFotoGaleria(<?php echo $album; ?>,newOrder);
+                },
+                placeholder: 'ui-state-default'
+            });
+        }
+        gallery.disableSelection();
+    }
     
 
     function makeDroppable() 

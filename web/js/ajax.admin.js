@@ -187,6 +187,7 @@ function ShowFotosGaleriaHTML(response)
         respuesta = JSON.parse(response);
         $("#cont_fotos").html(respuesta["html"]);
         $(".no_hay_datos").hide();
+        if(typeof window.sortGaleriaFotos === 'function') window.sortGaleriaFotos();
         
     }
 

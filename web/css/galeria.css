@@ -10,6 +10,25 @@
         overflow-y: auto;
         
 }
+
+#cont_fotos.galeria_dock {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 12px;
+}
+
+#cont_fotos.galeria_dock > .img_foto_clientes {
+        float: none;
+        width: auto;
+        box-sizing: border-box;
+        cursor: move;
+}
+
+#cont_fotos.galeria_dock .img_foto_clientes img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+}
 .galeria_dock_hover {
         border: 4px dotted #4d90fe;
         background-color: #e7f0ff;

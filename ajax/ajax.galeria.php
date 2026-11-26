@@ -269,7 +269,7 @@ function ShowFotosGaleria($album)
         if($MyAccessList->MeDasChancePasar("administrar_galeria") || $MyAccessList->MeDasChancePasar("administrar_mi_galeria"))
         {
             
-            $MyFoto->setOrdensql("orden ASC");
+            $MyFoto->setOrdensql("fotos_galeria.orden ASC");
             $MyFoto->setTampag(2000);
             if($MyFoto->get($album,1) == REGISTRO_SUCCESS)
             {

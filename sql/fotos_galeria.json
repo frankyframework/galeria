@@ -25,7 +25,8 @@
                 "name":"descripcion",
                 "type":"text",
                 "length":255,
-                "null":0
+                "null":0,
+                "default":""
             },
             {
                 "name":"fecha",
